@@ -8,22 +8,22 @@ namespace DoomFire;
 
 public class Game1 : Game
 {
-    readonly GraphicsDeviceManager graphics;
-    SpriteBatch spriteBatch;
-
     readonly FireData fireData;
     readonly Matrix scale;
+    readonly GraphicsDeviceManager graphics;
 
-    public Game1(FireData fireData, int width, int height)
+    SpriteBatch spriteBatch;
+
+    public Game1(int width, int height)
     {
         Window.Title = "Doom Fire";
         IsMouseVisible = true;
         IsFixedTimeStep = true;
         TargetElapsedTime = TimeSpan.FromSeconds(1d / 30d);
 
-        this.fireData = fireData;
-        var scaleX = Max(Ceiling((float) width / fireData.Cols), 1);
-        var scaleY = Max(Ceiling((float) height / fireData.Rows), 1);
+        fireData = new FireData(320, 168);
+        var scaleX = Max(Ceiling((float)width / fireData.Cols), 1);
+        var scaleY = Max(Ceiling((float)height / fireData.Rows), 1);
         scale = Matrix.CreateScale(scaleX, scaleY, 1);
 
         graphics = new(this);
@@ -56,17 +56,9 @@ public class Game1 : Game
     {
         GraphicsDevice.Clear(Color.White);
         spriteBatch.Begin(transformMatrix: scale);
-
-        for (var row = 0; row < fireData.Rows; row++)
-        for (var col = 0; col < fireData.Cols; col++)
-        {
-            Rectangle rect = new(col, row, 1, 1);
-            var colorIndex = fireData[row, col];
-            var color = ColorPalete.Colors[colorIndex];
-            spriteBatch.Draw(spriteBatch.BlankTexture(), rect, color);
-        }
-
+        fireData.Draw(spriteBatch);
         spriteBatch.End();
+
         base.Draw(gameTime);
     }
 }

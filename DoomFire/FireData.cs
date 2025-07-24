@@ -1,4 +1,6 @@
 ﻿using System;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace DoomFire;
 
@@ -72,6 +74,22 @@ public class FireData
             case FireWind.Right:
                 data[currentPixelIndex + decay] = newFireIntensity;
                 break;
+        }
+    }
+
+    Texture2D blankTexture;
+
+    public void Draw(SpriteBatch spriteBatch)
+    {
+        blankTexture ??= spriteBatch.CreateBlankTexture();
+
+        for (var row = 0; row < Rows; row++)
+        for (var col = 0; col < Cols; col++)
+        {
+            Rectangle rect = new(col, row, 1, 1);
+            var colorIndex = this[row, col];
+            var color = ColorPalete.Colors[colorIndex];
+            spriteBatch.Draw(blankTexture, rect, color);
         }
     }
 }

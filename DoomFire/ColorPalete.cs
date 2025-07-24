@@ -7,7 +7,7 @@ public static class ColorPalete
     static Color Rgb(int r, int g, int b) => new(r, g, b, byte.MaxValue);
 
     public static readonly Color[] Colors =
-    {
+    [
         Rgb(7, 7, 7),
         Rgb(31, 7, 7),
         Rgb(47, 15, 7),
@@ -44,6 +44,6 @@ public static class ColorPalete
         Rgb(207, 207, 111),
         Rgb(223, 223, 159),
         Rgb(239, 239, 199),
-        Rgb(255, 255, 255),
-    };
+        Rgb(255, 255, 255)
+    ];
 }

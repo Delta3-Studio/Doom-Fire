@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace DoomFire;
@@ -6,18 +7,12 @@ namespace DoomFire;
 public static class Extensions
 {
     public static FireWind Toggle(this FireWind wind) =>
-        (FireWind) (((int) wind + 1) % 3);
+        (FireWind)(((int)wind + 1) % Enum.GetValues<FireWind>().Length);
 
-    static Texture2D _blankTexture;
-
-    public static Texture2D BlankTexture(this SpriteBatch s)
+    public static Texture2D CreateBlankTexture(this SpriteBatch s)
     {
-        if (_blankTexture == null)
-        {
-            _blankTexture = new Texture2D(s.GraphicsDevice, 1, 1);
-            _blankTexture.SetData(new[] {Color.White});
-        }
-
-        return _blankTexture;
+        Texture2D blankTexture = new(s.GraphicsDevice, 1, 1);
+        blankTexture.SetData([Color.White]);
+        return blankTexture;
     }
 }
